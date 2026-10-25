@@ -1,6 +1,6 @@
 # SauceDemo Playwright + Cucumber BDD Framework
 
-A practical, TypeScript-based test automation framework combining **\*\*Cucumber (Gherkin BDD)\*** and **\*\*Playwright\***. It automates SauceDemo UI journeys and practice REST API scenarios while reusing Page Objects and API clients instead of putting automation logic directly into Gherkin step definitions.
+A practical, TypeScript-based test automation framework combining ****Cucumber (Gherkin BDD)**** and ****Playwright****. It automates SauceDemo UI journeys and practice REST API scenarios while reusing Page Objects and API clients instead of putting automation logic directly into Gherkin step definitions.
 
 This README is designed as an implementation guide: it explains the architecture, shows the execution flow, documents setup and commands, and includes diagrams that can be rendered by GitHub.
 
@@ -38,17 +38,14 @@ This README is designed as an implementation guide: it explains the architecture
 
 ## What this framework covers
 
+A practical, TypeScript-based test automation framework combining **Cucumber (Gherkin BDD)** and **Playwright**. It automates SauceDemo UI journeys and practice REST API scenarios while reusing Page Objects and API clients instead of putting automation logic directly into Gherkin step definitions.
+
 | Area | Coverage | Scenarios |
-
 |---|---|---:|
-
 | SauceDemo UI | Login, inventory/product details, sorting, cart, checkout | 16 |
-
 | Posts API | GET, filtering, POST, PUT, PATCH, DELETE, schema validation and negative cases | 8 |
-
 | Authentication API | Protected access, missing/invalid token, token reuse and refresh | 5 |
-
-| **\*\*Total\*** | **\*\*Distinct authored Gherkin scenarios\*** | **\*\*29\*** |
+| **Total** | **Distinct authored Gherkin scenarios** | **29** |
 
 The count is the number of authored scenarios, not the number of browser launches. The current Cucumber hooks launch Chromium for UI scenarios. The legacy Playwright Test specs and `playwright.config.ts` are retained for optional reference/execution using `npm run test:legacy`.
 
@@ -58,7 +55,7 @@ The framework separates business-readable scenarios from reusable automation log
 
 ```mermaid
 flowchart TD
-A["Feature files Gherkin scenarios"] --> B["Cucumber step definitions"]
+A["Feature files: Gherkin scenarios"] --> B["Cucumber step definitions"]
 B --> C{"Scenario type"}
 C -->|UI| D["Page Object Model"]
 C -->|Posts API| E["PostsApi client"]
@@ -68,12 +65,12 @@ E --> H["Playwright APIRequestContext"]
 F --> H
 G --> I["SauceDemo application"]
 H --> J["JSONPlaceholder / DummyJSON"]
-K["CustomWorld"] -. "Scenario state" .-> B
+K["CustomWorld: scenario state"] -.-> B
 L["Hooks: Before / After"] --> M["Setup and cleanup"]
 M --> G
 M --> H
-N["Playwright expect + Zod"] --> O["Assertions / schema validation"]
-B --> N
+B --> N["Playwright expect and Zod"]
+N --> O["Assertions / schema validation"]
 O --> P["Cucumber JSON report"]
 L --> Q["Failure screenshot attachment"]
 ```
@@ -217,8 +214,8 @@ C-->>C: Write configured report
 
 ```mermaid
 flowchart TD
-A["Run npm run test:ui"] --> B["Cucumber selects @ui scenarios"]
-B --> C["Before @ui hook"]
+A["Run UI test command"] --> B["Cucumber selects UI scenarios"]
+B --> C["Before UI hook"]
 C --> D["Launch Chromium"]
 D --> E["Create browser context and page"]
 E --> F["Execute Gherkin steps"]
@@ -227,7 +224,7 @@ G --> H["Page Objects"]
 H --> I["SauceDemo website"]
 I --> J["Assertions verify expected state"]
 J --> K{"Scenario passed?"}
-K -->|Yes| L["After hook closes page/context/browser"]
+K -->|Yes| L["After hook closes browser resources"]
 K -->|No| M["Attach failure screenshot if page exists"]
 M --> L
 L --> N["Cucumber report"]
@@ -267,20 +264,20 @@ The exact step wording must match the step definitions already present in `featu
 
 ```mermaid
 flowchart TD
-    A["Run API command"] --> B{"Select scenario tag"}
-    B -->|posts-api| C["Create JSONPlaceholder request context"]
-    B -->|auth-api| D["Create DummyJSON request context"]
-    C --> E["Posts API step definitions"]
-    D --> F["Authentication API step definitions"]
-    E --> G["PostsApi client"]
-    F --> H["AuthApi / AuthenticatedApiClient"]
-    G --> I["Send HTTP request"]
-    H --> I
-    I --> J["Receive API response"]
-    J --> K["Capture response and status"]
-    K --> L["Playwright assertions"]
-    L --> M["Zod schema validation where applicable"]
-    M --> N["Cucumber report"]
+A["Run API command"] --> B{"Select scenario tag"}
+B -->|Posts API| C["Create JSONPlaceholder request context"]
+B -->|Auth API| D["Create DummyJSON request context"]
+C --> E["Posts API step definitions"]
+D --> F["Authentication API step definitions"]
+E --> G["PostsApi client"]
+F --> H["AuthApi / AuthenticatedApiClient"]
+G --> I["Send HTTP request"]
+H --> I
+I --> J["Receive API response"]
+J --> K["Capture response and status"]
+K --> L["Playwright assertions"]
+L --> M["Zod schema validation where applicable"]
+M --> N["Cucumber report"]
 ```
 
 ### API responsibilities
@@ -302,9 +299,9 @@ The API endpoints are practice/test services. Do not treat successful POST/PUT/P
 ```mermaid
 flowchart TD
 A["Scenario starts"] --> B{"Matching tag"}
-B -->|@ui| C["Launch Chromium and create page"]
-B -->|@posts-api| D["Create JSONPlaceholder API context and PostsApi"]
-B -->|@auth-api| E["Create DummyJSON API context and AuthApi"]
+B -->|UI| C["Launch Chromium and create page"]
+B -->|Posts API| D["Create JSONPlaceholder API context"]
+B -->|Auth API| E["Create DummyJSON API context"]
 C --> F["Run scenario steps"]
 D --> F
 E --> F
@@ -368,7 +365,7 @@ AUTH_API_PASSWORD=your_dummyjson_password
 
 - Keep `.env.example` with placeholder values only.
 
-- In GitHub repository **\*\*Settings → Secrets and variables → Actions\***, add secrets named `AUTH_API_USERNAME` and `AUTH_API_PASSWORD`.
+- In GitHub repository ****Settings → Secrets and variables → Actions****, add secrets named `AUTH_API_USERNAME` and `AUTH_API_PASSWORD`.
 
 - The workflow passes these secrets to the job environment.
 
@@ -434,8 +431,8 @@ The workflow is configured to run for pushes to `main`, pull requests targeting 
 
 ```mermaid
 flowchart TD
-A["Push / Pull request / Manual run"] --> B["Checkout repository"]
-B --> C["Set up Node.js 22 + npm cache"]
+A["Push, pull request, or manual run"] --> B["Checkout repository"]
+B --> C["Set up Node.js 22 and npm cache"]
 C --> D["npm ci"]
 D --> E["npm run typecheck"]
 E --> F["npm run lint"]
@@ -508,9 +505,9 @@ The current configuration writes `cucumber-report.json`. After a run, inspect th
 
 The latest local validation shared for this framework reported:
 
-- **\*\*29 scenarios passed\***
+- ****29 scenarios passed****
 
-- **\*\*107 steps passed\***
+- ****107 steps passed****
 
 - `npm run typecheck` passed
 
