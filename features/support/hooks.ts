@@ -1,11 +1,12 @@
 import 'dotenv/config';
-import { Before, After, Status } from '@cucumber/cucumber';
+import { Before, After, Status, setDefaultTimeout } from '@cucumber/cucumber';
 import { chromium, request as playwrightRequest } from '@playwright/test';
 import { CustomWorld } from './world';
 import { LoginPage } from '../../pages/LoginPage';
 import { AuthApi } from '../../api/AuthApi';
 import { AuthenticatedApiClient } from '../../api/AuthenticatedApiClient';
 import { PostsApi } from '../../api/PostsApi';
+setDefaultTimeout(30 * 1000);
 
 Before('@ui', async function (this: CustomWorld) {
   this.browser = await chromium.launch({ headless: process.env.PW_HEADLESS !== 'false' });

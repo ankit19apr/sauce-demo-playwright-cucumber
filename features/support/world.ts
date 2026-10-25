@@ -1,6 +1,10 @@
 import { World, IWorldOptions, setWorldConstructor } from '@cucumber/cucumber';
 import type { Browser, BrowserContext, Page, APIRequestContext, APIResponse } from '@playwright/test';
-import { PostsApi } from '../../api/PostsApi';
+import {
+  PostsApi,
+  type PostPayload,
+  type PatchPostPayload,
+} from '../../api/PostsApi';
 import { AuthApi } from '../../api/AuthApi';
 import { AuthenticatedApiClient } from '../../api/AuthenticatedApiClient';
 
@@ -13,8 +17,8 @@ export class CustomWorld extends World {
   authApi?: AuthApi;
   authenticatedClient?: AuthenticatedApiClient;
   apiResponse?: APIResponse;
-  responseBody?: any;
-  submittedPayload?: any;
+  responseBody?: unknown;
+  submittedPayload?: PostPayload | PatchPostPayload;
   firstAccessToken?: string;
   refreshedTokens?: { accessToken: string; refreshToken: string; expiresAt: number };
 

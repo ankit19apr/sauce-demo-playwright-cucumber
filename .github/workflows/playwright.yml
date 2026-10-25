@@ -1,5 +1,8 @@
+```yaml
+# Name displayed in the GitHub Actions tab
 name: Playwright Cucumber BDD Tests
 
+# Trigger the workflow on pushes, pull requests to main, or manual execution
 on:
   push:
     branches: [main]
@@ -7,40 +10,72 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Grant only read access to repository contents
+permissions:
+  contents: read
+
+# Cancel older runs for the same branch or pull request
+# This saves CI resources when new commits are pushed
+concurrency:
+  group: cucumber-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  # Main job for executing Cucumber UI and API tests
   cucumber-bdd:
-    name: Cucumber BDD UI and API scenarios
+    name: Cucumber BDD — UI and API Tests
     runs-on: ubuntu-latest
+
+    # Stop the job if it exceeds 20 minutes
+    timeout-minutes: 20
+
+    # Environment variables available to all steps in this job
+    # Credentials are stored securely in GitHub Actions secrets
+    env:
+      CI: true
+      AUTH_API_USERNAME: ${{ secrets.AUTH_API_USERNAME }}
+      AUTH_API_PASSWORD: ${{ secrets.AUTH_API_PASSWORD }}
+
     steps:
+      # Download the repository code to the GitHub-hosted runner
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Install Node.js and enable npm dependency caching
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
 
-      # npm install updates the lockfile if the migration dependencies have not
-      # yet been installed locally. Commit the regenerated package-lock.json.
+      # Install exact dependency versions from package-lock.json
+      # npm ci also checks that the lockfile matches package.json
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
+      # Check TypeScript types without generating compiled files
       - name: TypeScript type check
         run: npm run typecheck
 
+      # Check code quality and enforce ESLint rules
       - name: ESLint code quality check
         run: npm run lint
 
+      # Install Playwright browsers and their operating-system dependencies
+      # Useful when UI tests require browser binaries on a clean CI runner
+      #- name: Install Playwright browsers
+      #  run: npx playwright install --with-deps
+
+      # Install browser Chromium
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
+      # Execute the complete Cucumber suite, including tagged UI and API scenarios
       - name: Run Cucumber scenarios
         run: npm test
-        env:
-          AUTH_API_USERNAME: ${{ secrets.AUTH_API_USERNAME }}
-          AUTH_API_PASSWORD: ${{ secrets.AUTH_API_PASSWORD }}
 
+      # Preserve the Cucumber JSON report for later inspection
+      # Run even if a previous step failed, unless the workflow was cancelled
       - name: Upload Cucumber JSON report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
@@ -49,3 +84,18 @@ jobs:
           path: cucumber-report.json
           if-no-files-found: warn
           retention-days: 14
+
+      # Upload available debugging evidence if the job fails
+      # Missing paths are ignored so they do not create another failure
+      - name: Upload failure evidence
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-failure-evidence
+          path: |
+            test-results/
+            screenshots/
+            cucumber-report.json
+          if-no-files-found: ignore
+          retention-days: 14
+```
