@@ -1,0 +1,37 @@
+{
+  "name": "sauce-demo-playwright-cucumber",
+  "version": "2.0.0",
+  "description": "Playwright, TypeScript, Cucumber BDD, UI and API automation framework for SauceDemo and practice APIs",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js",
+    "test:ui": "cucumber-js --tags '@ui'",
+    "test:api": "cucumber-js --tags '@posts-api or @auth-api'",
+    "test:posts-api": "cucumber-js --tags '@posts-api'",
+    "test:auth-api": "cucumber-js --tags '@auth-api'",
+    "test:headed": "cross-env PW_HEADLESS=false cucumber-js --tags '@ui'",
+    "test:legacy": "playwright test",
+    "report": "node -e \"console.log('Cucumber JSON report: cucumber-report.json')\"",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "keywords": ["playwright", "cucumber", "bdd", "typescript", "automation", "saucedemo"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.2.0",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5",
+    "cross-env": "^10.1.0",
+    "eslint": "^10.13.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.0",
+    "zod": "^4.6.7"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.9"
+  }
+}

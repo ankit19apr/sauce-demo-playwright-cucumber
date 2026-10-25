@@ -1,0 +1,51 @@
+name: Playwright Cucumber BDD Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  cucumber-bdd:
+    name: Cucumber BDD UI and API scenarios
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # npm install updates the lockfile if the migration dependencies have not
+      # yet been installed locally. Commit the regenerated package-lock.json.
+      - name: Install dependencies
+        run: npm install
+
+      - name: TypeScript type check
+        run: npm run typecheck
+
+      - name: ESLint code quality check
+        run: npm run lint
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Cucumber scenarios
+        run: npm test
+        env:
+          AUTH_API_USERNAME: ${{ secrets.AUTH_API_USERNAME }}
+          AUTH_API_PASSWORD: ${{ secrets.AUTH_API_PASSWORD }}
+
+      - name: Upload Cucumber JSON report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-json-report
+          path: cucumber-report.json
+          if-no-files-found: warn
+          retention-days: 14
