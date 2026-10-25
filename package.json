@@ -8,14 +8,22 @@
     "test:ui": "cucumber-js --tags @ui",
     "test:api": "cucumber-js --tags \"@posts-api or @auth-api\"",
     "test:posts-api": "cucumber-js --tags @posts-api",
-    "test:auth-api": "cucumber-js --tags @auth-api" ,
+    "test:auth-api": "cucumber-js --tags @auth-api",
     "test:headed": "cross-env PW_HEADLESS=false cucumber-js --tags @ui",
     "test:legacy": "playwright test",
     "report": "node -e \"console.log('Cucumber JSON report: cucumber-report.json')\"",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "report:cucumber": "node scripts/generate-cucumber-report.mjs"
   },
-  "keywords": ["playwright", "cucumber", "bdd", "typescript", "automation", "saucedemo"],
+  "keywords": [
+    "playwright",
+    "cucumber",
+    "bdd",
+    "typescript",
+    "automation",
+    "saucedemo"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
@@ -26,6 +34,7 @@
     "@types/node": "^26.6.5",
     "cross-env": "^10.1.0",
     "eslint": "^10.13.0",
+    "multiple-cucumber-html-reporter": "^4.5.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.72.0",

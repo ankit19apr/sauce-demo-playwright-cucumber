@@ -4,7 +4,11 @@ module.exports = {
     requireModule: ['ts-node/register'],
     require: ['features/support/**/*.ts', 'features/step-definitions/**/*.ts'],
     paths: ['features/**/*.feature'],
-    format: ['progress', 'json:cucumber-report.json'],
+    format: [
+      'progress',
+      'json:cucumber-report.json',
+      'html:cucumber-report.html'
+    ],
     publishQuiet: true,
     parallel: 1,
   },

@@ -9,6 +9,8 @@ node_modules/
 .env
 .env.*
 !.env.example
-# Cucumber reports
-cucumber-report.json
-reports/
+# Generated Cucumber reports
+/cucumber-report.json
+/cucumber-report.html
+/cucumber-html-report/
+/cucumber-json/
