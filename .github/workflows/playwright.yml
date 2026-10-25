@@ -1,4 +1,3 @@
-```yaml
 # Name displayed in the GitHub Actions tab
 name: Playwright Cucumber BDD Tests
 
@@ -98,4 +97,3 @@ jobs:
             cucumber-report.json
           if-no-files-found: ignore
           retention-days: 14
-```
