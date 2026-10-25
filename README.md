@@ -8,20 +8,20 @@ This README is designed as an implementation guide: it explains the architecture
 
 ## Contents
 
-1\. [What this framework covers](#what-this-framework-covers)
-2\. [High-level architecture](#high-level-architecture)
-3\. [Repository structure](#repository-structure)
-4\. [How a scenario executes](#how-a-scenario-executes)
-5\. [UI automation flow](#ui-automation-flow)
-6\. [API automation flow](#api-automation-flow)
-7\. [Hooks and scenario lifecycle](#hooks-and-scenario-lifecycle)
-8\. [Setup](#setup)
-9\. [Credentials and environment variables](#credentials-and-environment-variables)
-10\. [Commands and tags](#commands-and-tags)
-11\. [GitHub Actions CI/CD](#github-actions-cicd)
-12\. [Reports and troubleshooting](#reports-and-troubleshooting)
-13\. [Validation status](#validation-status)
-14\. [How to extend the framework](#how-to-extend-the-framework)
+1. [What this framework covers](#what-this-framework-covers)
+2. [High-level architecture](#high-level-architecture)
+3. [Repository structure](#repository-structure)
+4. [How a scenario executes](#how-a-scenario-executes)
+5. [UI automation flow](#ui-automation-flow)
+6. [API automation flow](#api-automation-flow)
+7. [Hooks and scenario lifecycle](#hooks-and-scenario-lifecycle)
+8. [Setup](#setup)
+9. [Credentials and environment variables](#credentials-and-environment-variables)
+10. [Commands and tags](#commands-and-tags)
+11. [GitHub Actions CI/CD](#github-actions-cicd)
+12. [Reports and troubleshooting](#reports-and-troubleshooting)
+13. [Validation status](#validation-status)
+14. [How to extend the framework](#how-to-extend-the-framework)
 
 ## What this framework covers
 
