@@ -9,31 +9,18 @@ This README is designed as an implementation guide: it explains the architecture
 ## Contents
 
 1\. [What this framework covers](#what-this-framework-covers)
-
 2\. [High-level architecture](#high-level-architecture)
-
 3\. [Repository structure](#repository-structure)
-
 4\. [How a scenario executes](#how-a-scenario-executes)
-
 5\. [UI automation flow](#ui-automation-flow)
-
 6\. [API automation flow](#api-automation-flow)
-
 7\. [Hooks and scenario lifecycle](#hooks-and-scenario-lifecycle)
-
 8\. [Setup](#setup)
-
 9\. [Credentials and environment variables](#credentials-and-environment-variables)
-
 10\. [Commands and tags](#commands-and-tags)
-
 11\. [GitHub Actions CI/CD](#github-actions-cicd)
-
 12\. [Reports and troubleshooting](#reports-and-troubleshooting)
-
 13\. [Validation status](#validation-status)
-
 14\. [How to extend the framework](#how-to-extend-the-framework)
 
 ## What this framework covers
@@ -78,23 +65,14 @@ L --> Q["Failure screenshot attachment"]
 ### Main responsibilities
 
 | Component | Responsibility | Keep it focused on |
-
 |---|---|---|
-
 | `.feature` files | Describe expected behaviour in Gherkin | Business-readable Given/When/Then steps |
-
 | Step definitions | Translate Gherkin steps into automation calls | Orchestration, not large chunks of UI/API logic |
-
 | Page Objects (`pages/`) | Encapsulate UI locators and actions | UI-specific behaviour |
-
 | API clients (`api/`) | Encapsulate HTTP calls and payload handling | API-specific behaviour |
-
 | `CustomWorld` | Store objects and data for one scenario | Scenario state; avoid sharing mutable state across scenarios |
-
 | Hooks (`features/support/hooks.ts`) | Create/clean resources and handle failures | Setup, teardown and attachments |
-
 | Zod schemas | Validate API response shapes | Explicit structure checks |
-
 | GitHub Actions | Run checks and tests in CI | Reproducible validation and artifacts |
 
 ## Repository structure
@@ -104,65 +82,35 @@ L --> Q["Failure screenshot attachment"]
 repository-root/
 
 ├── .github/
-
 │   └── workflows/
-
 │       └── \<workflow-file>.yml    # GitHub Actions pipeline
-
 ├── api/
-
 │   ├── PostsApi.ts                # JSONPlaceholder posts endpoints
-
 │   ├── AuthApi.ts                 # DummyJSON authentication/token operations
-
 │   └── AuthenticatedApiClient.ts  # Authenticated requests and retry policy
-
 ├── features/
-
 │   ├── ui/
-
 │   │   ├── login.feature
-
 │   │   ├── inventory.feature
-
 │   │   ├── cart.feature
-
 │   │   └── checkout.feature
-
 │   ├── api/
-
 │   │   ├── posts.feature
-
 │   │   └── authentication.feature
-
 │   ├── step-definitions/
-
 │   │   ├── ui.steps.ts
-
 │   │   └── api.steps.ts
-
 │   └── support/
-
 │       ├── world.ts               # CustomWorld: scenario-specific state
-
 │       └── hooks.ts               # Before/After hooks
-
 ├── pages/                         # Login, inventory, product, cart, checkout pages
-
 ├── tests/                         # Retained legacy Playwright Test specs
-
 ├── playwright.config.ts           # Retained legacy Playwright configuration
-
 ├── cucumber.js                     # Cucumber support files, paths and report config
-
 ├── package.json                    # Scripts and dependencies
-
 ├── package-lock.json               # Reproducible dependency tree
-
 ├── .env.example                    # Credential template; safe to commit
-
 ├── .gitignore                      # Excludes .env, node_modules and test output
-
 └── README.md
 
 ```
@@ -402,15 +350,10 @@ Check `package.json` for the exact command definitions in your current checkout.
 ### Tag reference
 
 | Tag | Purpose |
-
 |---|---|
-
 | `@ui` | Browser scenarios |
-
 | `@authenticated` | Performs SauceDemo login in the matching setup hook |
-
 | `@posts-api` | JSONPlaceholder API scenarios |
-
 | `@auth-api` | DummyJSON authentication scenarios |
 
 Examples:
