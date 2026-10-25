@@ -1,5 +1,6 @@
 import { mkdir, copyFile } from 'node:fs/promises';
 import { generate } from 'multiple-cucumber-html-reporter';
+import process from 'node:process';
 
 await mkdir('./cucumber-json', { recursive: true });
 

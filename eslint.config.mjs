@@ -10,6 +10,15 @@ export default tseslint.config(
       'blob-report/',
       'all-blob-reports/',
       'playwright/.auth/',
+
+      // Generated Cucumber reports
+      'cucumber-html-report/',
+      'cucumber-json/',
+      'cucumber-report.json',
+      'cucumber-report.html',
+
+      // Other generated output
+      'coverage/',
     ],
   },
   js.configs.recommended,
